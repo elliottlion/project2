@@ -4,6 +4,7 @@ public class Scene
         private int rows;
         private int cols;
         private GameObject background;
+        private GameObject menuBackground;
         //private GameObject menuBackground;
         private ArrayList<Block> blocks;
         private ArrayList<Block> monsters;
@@ -11,6 +12,7 @@ public class Scene
         private Exit exit;
         private boolean playerHasKey = false;
         private boolean decrypta = false;
+        private boolean menu;
         private ArrayList<Key> key;
         private ArrayList<Encryption> encryption;
         public Scene( String[][] map ) 
@@ -21,7 +23,7 @@ public class Scene
             int width = cols * 32;
             int height = rows * 32;
             this.background = new GameObject(0, 0, width, height, "assets/background.png");
-            //this.menuBackground = new GameObject(0, 0, width, height, "assets/backgroundMenu.png");
+            this.menuBackground = new GameObject(0, 0, width, height, "assets/backgroundMenu.png");
             this.blocks = new ArrayList<Block>();
             this.monsters = new ArrayList<Block>();
             this.key = new ArrayList<>();
@@ -42,13 +44,22 @@ public class Scene
             StdDraw.enableDoubleBuffering();
             
         }
+        public void showMenu() {
+            boolean menu = true;
+            while (menu) {
+                menuBackground.draw();
+                StdDraw.show();
+                if (StdDraw.isKeyPressed(65)) { // 'A' key
+                    menu = false;
+                }
+                else if (StdDraw.isKeyPressed(69)){
+                    System.exit(0);
+                }
+            }
+        }
         public void draw()
         
-        {   /*Game objMenu = new Game();
-            if (objMenu.checkMenu())
-            {
-                menuBackground.draw();
-            }*/
+        {   
             
             background.draw();
             for ( Block block : this.blocks) 

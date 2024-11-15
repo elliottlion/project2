@@ -5,8 +5,10 @@ public class Game
     private int level;
     private Scene scene;
     private Controller controller;
-    private boolean menu;
+    
+   
     public Game(){
+    
         
         
 
@@ -41,6 +43,7 @@ public class Game
         this.scene = new Scene(map);
         Player player = scene.getPlayer();
         this.controller = new Controller(player);
+        scene.showMenu();
     }
     public void update()
     {
@@ -78,9 +81,7 @@ public class Game
         }
         
     }}
-    public boolean checkMenu(){
-        return menu;
-    }
+   
    
     
         
