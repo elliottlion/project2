@@ -5,14 +5,14 @@ public class Scene
         private int cols;
         private GameObject background;
         private GameObject menuBackground;
-        //private GameObject menuBackground;
+        private GameObject[] endBackgrounds;
         private ArrayList<Block> blocks;
         private ArrayList<Block> monsters;
         private Player player;
         private Exit exit;
         private boolean playerHasKey = false;
-        private boolean decrypta = false;
-        private boolean menu;
+        
+        
         private ArrayList<Key> key;
         private ArrayList<Encryption> encryption;
         public Scene( String[][] map ) 
@@ -24,6 +24,12 @@ public class Scene
             int height = rows * 32;
             this.background = new GameObject(0, 0, width, height, "assets/background.png");
             this.menuBackground = new GameObject(0, 0, width, height, "assets/backgroundMenu.png");
+            this.endBackgrounds = new GameObject[]{
+                new GameObject(0, 0, width, height, "assets/endBackground0.png"),
+                new GameObject(0, 0, width, height, "assets/endBackground1.png"),
+                new GameObject(0, 0, width, height, "assets/endBackground2.png"),
+                new GameObject(0, 0, width, height, "assets/endBackground3.png"),
+                new GameObject(0, 0, width, height, "assets/endBackground4.png")};
             this.blocks = new ArrayList<Block>();
             this.monsters = new ArrayList<Block>();
             this.key = new ArrayList<>();
@@ -45,6 +51,8 @@ public class Scene
             
         }
         public void showMenu() {
+            PlaySound looPlaySound = new PlaySound();
+            looPlaySound.playloop("CYBERPONK.wav");
             boolean menu = true;
             while (menu) {
                 menuBackground.draw();
@@ -55,7 +63,7 @@ public class Scene
                 else if (StdDraw.isKeyPressed(69)){
                     System.exit(0);
                 }
-            }
+            }//multiple defacto vetos requiring minorities consent
         }
         public void draw()
         
@@ -75,11 +83,11 @@ public class Scene
             if(playerHasKey == false){
                 key.draw();
             }
-            decrypta = Decrypt();
+            
             for (Block encryption :this.encryption)
-            if(decrypta = false){
-                encryption.draw();
-            }
+            {
+                encryption.draw();}
+            
             player.draw();
             exit.draw();
             StdDraw.show();
@@ -115,8 +123,11 @@ public class Scene
                 this.key.add(key);
             }
             else if (tile.equals("e")){
+               
+                if (!Decrypt()){
                 Encryption encryption = new Encryption(x, y);
                 this.encryption.add(encryption);
+                }
             }
             
         }
@@ -161,7 +172,19 @@ public class Scene
         public void update() 
         {
             player.update(blocks);
+            encryption.removeIf(enc -> enc.isTouching(player) && playerHasKey);
             
+        }
+        public void showEndBackgrounds() {
+            for (GameObject endBackground : endBackgrounds) {
+                endBackground.draw();
+                StdDraw.show();
+                try {
+                    Thread.sleep(5000); // Wait for 5 seconds
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
         }
 
 }

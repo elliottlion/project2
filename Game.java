@@ -59,6 +59,7 @@ public class Game
             }
             else {
             PlaySound soundPlayer = new PlaySound(); soundPlayer.playSound("youWin.wav");
+            scene.showEndBackgrounds();
             this.isOver = true;
             }
             }
