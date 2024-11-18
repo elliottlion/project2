@@ -52,7 +52,7 @@ public class Scene
         }
         public void showMenu() {
             PlaySound looPlaySound = new PlaySound();
-            looPlaySound.playloop("CYBERPONK.wav");
+            looPlaySound.playloop("Cyberpunk.wav");
             boolean menu = true;
             while (menu) {
                 menuBackground.draw();
@@ -180,8 +180,9 @@ public class Scene
                 endBackground.draw();
                 StdDraw.show();
                 try {
-                    Thread.sleep(5000); // Wait for 5 seconds
-                } catch (InterruptedException e) {
+                    Thread.sleep(2500);
+                                } 
+                catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
             }
